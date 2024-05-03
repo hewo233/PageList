@@ -10,3 +10,9 @@ func DefaultPage(c *gin.Context) {
 		"title": "Home Page",
 	})
 }
+
+func Ping(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "pong",
+	})
+}

@@ -9,6 +9,8 @@ func main() {
 
 	router := gin.Default()
 
+	router.LoadHTMLGlob("templates/*")
+
 	routers.SetupRouter(router)
 
 	err := router.Run(":8080")

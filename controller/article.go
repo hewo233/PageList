@@ -9,10 +9,11 @@ import (
 
 func ShowIndexPage(c *gin.Context) {
 	articles := model.GetAllArticles()
-	c.HTML(200, "index.html", gin.H{
+
+	render(c, gin.H{
 		"title":   "Home Page",
 		"payload": articles,
-	})
+	}, "index.html")
 }
 
 func GetArticleByID(id int) (*model.Article, error) {
@@ -38,4 +39,15 @@ func ShowArticlePage(c *gin.Context) {
 		"title":   article.Title,
 		"payload": article,
 	})
+}
+
+func render(c *gin.Context, data gin.H, templateName string) {
+	switch c.Request.Header.Get("Accept") {
+	case "application/json":
+		c.JSON(200, data["payload"])
+	case "application/xml":
+		c.XML(200, data["payload"])
+	default:
+		c.HTML(200, templateName, data)
+	}
 }
